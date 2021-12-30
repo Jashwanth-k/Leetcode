@@ -11,12 +11,12 @@ class Solution:
                 return
 
             l.append(root.val)
-            left = pathSum_K(root.left,k,output,l)
-            right = pathSum_K(root.right,k,output,l)
+            left = pathSum_K(root.left,k-root.val,output,l)
+            right = pathSum_K(root.right,k-root.val,output,l)
 
             if left == None and right == None:
-                if sum(l) == k:
-                    output.append(copy.deepcopy(l))
+                if k == root.val:
+                    output.append(l[:])
             l.pop()
             return root
         
