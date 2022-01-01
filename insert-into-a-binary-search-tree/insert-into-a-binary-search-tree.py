@@ -5,17 +5,13 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def insert_helper(self,root,node):
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         if root is None:
-            root = node
+            root = TreeNode(val)
             return root
 
-        if root.val > node.val:
-            root.left = self.insert_helper(root.left,node)
+        if root.val > val:
+            root.left = self.insertIntoBST(root.left,val)
         else:
-            root.right = self.insert_helper(root.right,node)
+            root.right = self.insertIntoBST(root.right,val)
         return root
-    
-    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-        newNode = TreeNode(val)
-        return self.insert_helper(root,newNode)
