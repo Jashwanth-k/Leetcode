@@ -5,19 +5,15 @@ class MapSum:
 
     def insert(self, key: str, val: int) -> None:
         self.d[key] = val
-        # print(self.d)
 
     def sum(self, prefix: str) -> int:
-        count = 0
-        for key in self.d.keys():
-            prelen = 0
-            for i in range(len(prefix)):
-                if len(prefix) > len(key) or prefix[i] != key[i]:
-                    break
-                else:
-                    prelen += 1
-            if prelen == len(prefix):
-                count += self.d[key]
+        count,l = 0,len(prefix)
+        for key in self.d:
+            if l > len(key):
+                continue
+            else:
+                if key[0:l] == prefix:
+                    count += self.d[key]
         return count
             
             
