@@ -5,31 +5,12 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def invertTree(self,root):
-        if root is None:
-            return
-        
-        root.left,root.right = root.right,root.left
-        self.invertTree(root.left)
-        self.invertTree(root.right)
-        return root
-    
-    def checkTree(self,root1,root2):
-        if root1 == None and root2 == None:
-            return True
-        if root1 == None and root2 != None:
-            return False
-        if root1 != None and root2 == None:
-            return False
-        
-        if root1.val != root2.val:
-            return False
-        left = self.checkTree(root1.left,root2.left)
-        right = self.checkTree(root1.right,root2.right)
-        if left and right:
-            return True
-        return False
-        
+    def dfs(self,L,R):
+        if L and R:
+            if L.val != R.val:
+                return False
+            return self.dfs(L.left,R.right) and self.dfs(L.right,R.left)
+        return L == R
+            
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        rightin = self.invertTree(root.right)
-        return self.checkTree(root.left,rightin)
+        return self.dfs(root.left,root.right)
