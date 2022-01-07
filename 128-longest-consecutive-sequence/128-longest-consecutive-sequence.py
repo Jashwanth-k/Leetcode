@@ -3,19 +3,29 @@ class Solution:
         if len(nums) == 0:
             return 0
         
-        nums.sort()
         maxLen = 0
-        i = 0
-        count = 0
-        while i + 1 < len(nums):
-            if nums[i+1] - nums[i] == 1:
-                count += 1
-            elif nums[i+1] - nums[i] == 0:
-                pass
-            else:
-                maxLen = max(maxLen,count+1)
-                count = 0
-            i += 1
+        start = 0
+        d = {}
+        for i in nums:
+            d[i] = True
             
-        return max(maxLen,count+1)
+        for i in nums:
+            subLen = 1
+            if d[i] == True:
+                left = i-1
+                right = i+1
+                
+                while right in d and d[right] == True:
+                    subLen += 1
+                    d[right] = False
+                    right += 1
+                
+                while left in d and d[left] == True:
+                    subLen += 1
+                    d[left] = False
+                    left -= 1
+            
+            maxLen = max(subLen,maxLen)
+        return maxLen
+                
                 
