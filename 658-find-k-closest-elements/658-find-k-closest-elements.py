@@ -21,14 +21,11 @@ class Solution:
         else:
             idx = mid[1]
         output = [arr[idx]]
-        l = idx - 1
-        r = idx + 1
+        l,r = idx - 1,idx + 1
         
         while len(output) < k:
             if r >= len(arr) or (abs(arr[l] - x) <= abs(arr[r] - x)):
                 output = [arr[l]] + output
-                if len(output) == k:
-                    break
                 l -= 1
             else:
                 output.append(arr[r])
