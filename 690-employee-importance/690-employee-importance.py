@@ -13,15 +13,14 @@ class Solution:
             sib,imp = d[sv]
             for j in sib:
                 if j not in visited:
-                    dist[sv] += DFS(j,visited)
-            dist[sv] += imp
+                    dist[sv] = dist.get(sv,0) + DFS(j,visited)
+            dist[sv] = dist.get(sv,0) + imp
             return dist[sv]
         
         d = collections.defaultdict(list)
         for i in employees:
             d[i.id].extend((i.subordinates,i.importance))
-        # print(d)
         
-        dist = [0] * 2001
+        dist = {}
         DFS(id,set())
         return dist[id]
