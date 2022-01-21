@@ -3,15 +3,16 @@ class Solution:
         def DFS(sv):
             nonlocal c
             visited[sv] = True
-            for sib,diff in d[sv]:
+            for sib,check in d[sv]:
                 if visited[sib] == False:
-                    c += diff
+                    if check:
+                        c += 1
                     DFS(sib)
                     
         d = collections.defaultdict(list)
         for i,j in connections:
-            d[i].append((j,1))
-            d[j].append((i,0))
+            d[i].append((j,True))
+            d[j].append((i,False))
             
         visited = [False] * n
         c = 0
