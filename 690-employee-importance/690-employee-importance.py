@@ -8,19 +8,18 @@ class Employee:
 """
 class Solution:
     def getImportance(self, employees: List['Employee'], id: int) -> int:
-        def DFS(sv,visited):
-            visited.add(sv)
+        def DFS(sv):
             sib,imp = d[sv]
+            dist[sv] = 0
             for j in sib:
-                if j not in visited:
-                    dist[sv] = dist.get(sv,0) + DFS(j,visited)
-            dist[sv] = dist.get(sv,0) + imp
+                dist[sv] += DFS(j)
+            dist[sv] += imp
             return dist[sv]
         
         d = collections.defaultdict(list)
         for i in employees:
             d[i.id].extend((i.subordinates,i.importance))
-        
+            
         dist = {}
-        DFS(id,set())
+        DFS(id)
         return dist[id]
