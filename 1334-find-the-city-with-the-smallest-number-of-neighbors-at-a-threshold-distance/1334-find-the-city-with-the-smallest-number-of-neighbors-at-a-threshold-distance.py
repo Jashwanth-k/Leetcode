@@ -9,14 +9,14 @@ class Solution:
         for i in range(n):
             heap = [(0, i)]
             dist = [float('inf')] * n
+            dist[i] = 0
             while heap:
                 curr = heap.pop(0)
                 ndis, node = curr[0], curr[1]
                 for sib, wt in d[node]:
                     currdis = ndis + wt
                     if currdis < dist[sib] and currdis <= distanceThreshold:
-                        if sib not in s[i] and sib != i:
-                            s[i].append(sib)
+                        if sib not in s[i]: s[i].append(sib)
                         dist[sib] = currdis
                         heapq.heappush(heap, (currdis, sib))
         
