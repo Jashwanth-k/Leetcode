@@ -1,15 +1,15 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        if n == 1:
-            return ["()"]
+        def helper(left,right,ans,s):
+            if left == 0 and right == 0:
+                ans.append(s)
+                return
             
-        smalloutput = self.generateParenthesis(n-1)
-        output = []
-        
-        for subpar in smalloutput:
-            for j in range(len(subpar)):
-                ans = subpar[:j] + '()' + subpar[j:]
-                if ans not in output:
-                    output.append(ans)
-        return output
-        
+            if left > 0:
+                helper(left-1,right,ans,s + '(')
+            if right > left:
+                helper(left,right-1,ans,s + ')')
+                
+        ans = []
+        helper(n,n,ans,'')
+        return ans
