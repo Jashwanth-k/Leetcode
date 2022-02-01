@@ -1,14 +1,17 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        def helper(n,k):
-            if k == 1:
-                return [[i] for i in range(1,n+1)]
+        def helper(ans,nums,k,subarr):
+            if len(subarr) == k:
+                ans.append(subarr)
+                return
+            if len(nums) == 0:
+                return
             
-            smalloutput = helper(n,k-1)
-            output = []
-            for sublist in smalloutput:
-                idx = sublist[-1]
-                for j in range(idx+1,n+1):
-                    output.append(sublist + [j])
-            return output
-        return helper(n,k)
+            helper(ans,nums[1:],k,subarr + [nums[0]])
+            helper(ans,nums[1:],k,subarr)
+            return
+        
+        ans = []
+        nums = [i for i in range(1,n+1)]
+        helper(ans,nums,k,[])
+        return ans
