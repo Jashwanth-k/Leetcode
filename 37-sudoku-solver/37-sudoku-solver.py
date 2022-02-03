@@ -2,12 +2,12 @@ class Solution:
     def isSafe(self,board,r,c,n,nbr):
         # checking row
         for i in range(n):
-            if i != c and board[r][i] == nbr:
+            if board[r][i] == nbr:
                 return False
             
         # checking column
         for i in range(n):
-            if i != r and board[i][c] == nbr:
+            if board[i][c] == nbr:
                 return False
             
         # checking 3x3 sub-box
@@ -15,7 +15,7 @@ class Solution:
         subcol = c // 3 * 3
         for i in range(3):
             for j in range(3):
-                if (subrow+i != r and subcol+j != c) and board[subrow + i][subcol + j] == nbr:
+                if board[subrow + i][subcol + j] == nbr:
                     return False
         return True
     
