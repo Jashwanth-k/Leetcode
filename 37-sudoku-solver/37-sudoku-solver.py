@@ -15,7 +15,7 @@ class Solution:
         subcol = c // 3 * 3
         for i in range(3):
             for j in range(3):
-                if (i != r and j != c) and board[subrow + i][subcol + j] == nbr:
+                if (subrow+i != r and subcol+j != c) and board[subrow + i][subcol + j] == nbr:
                     return False
         return True
     
