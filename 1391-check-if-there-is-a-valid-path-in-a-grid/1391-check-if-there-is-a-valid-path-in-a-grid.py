@@ -5,11 +5,8 @@ class Solution:
             return
         
         present = solution[r][c]
-        if r == 0 and c == 0:
-            pass
-        else:
-            if present[helper[path]] == False:
-                return
+        if path != None and present[helper[path]] == False:
+            return
         
         if r == n-1 and c == m-1:
             return True
