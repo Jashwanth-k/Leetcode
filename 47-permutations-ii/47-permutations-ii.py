@@ -1,13 +1,18 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        if len(nums) == 1:
-            return [nums]
-        
-        smalloutput = self.permuteUnique(nums[1:]) 
-        output = []
-        for sublist in smalloutput:
-            for j in range(len(nums)):
-                ans = sublist[:j] + [nums[0]] + sublist[j:]
-                if ans not in output:
-                    output.append(ans)
-        return output
+        nums.sort()
+        def DFS(nums,result,path):
+            if len(nums) == 0:
+                result.append(path)
+                return
+            
+            for i in range(len(nums)):
+                if i > 0 and nums[i] == nums[i-1]:
+                    continue
+                
+                DFS(nums[:i] + nums[i+1:],result,path + [nums[i]])
+                
+        result = []
+        DFS(nums,result,[])
+        return result
+    
