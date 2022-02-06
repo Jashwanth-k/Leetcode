@@ -4,13 +4,9 @@ class Solution:
             splitted = s.split('.')
             if len(splitted) == 4:
                 for i in splitted:
-                    if i == '':
+                    if i == '' or int(i) > 255 or int(i) < 0:
                         return
-                    if int(i) > 255 or int(i) < 0:
-                        return
-                    if int(i) > 0 and i[0] == "0":
-                        return
-                    if int(i) == 0 and len(i) != 1:
+                    if (int(i) > 0 and i[0] == "0") or (int(i) == 0 and len(i) != 1):
                         return
                 output.append(s)
 
