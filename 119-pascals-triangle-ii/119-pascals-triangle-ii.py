@@ -1,18 +1,11 @@
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        def helper(numRows):
-            if numRows == 1:
-                return [[1]]
-
-            smalloutput = helper(numRows-1)
-            suboutput = smalloutput[numRows-2]
-            ans = [0] * numRows
-            ans[0],ans[-1] = suboutput[0],suboutput[-1]
-            for i in range(1,len(suboutput)):
-                ans[i] = suboutput[i] + suboutput[i-1]
-
-            smalloutput.append(ans)
-            return smalloutput
+        if rowIndex == 0:
+            return [1]
         
-        output = helper(rowIndex+1)
-        return output[rowIndex]
+        prevrow = self.getRow(rowIndex-1)
+        output = [prevrow[0]]
+        for i in range(1,len(prevrow)):
+            output.append(prevrow[i] + prevrow[i-1])
+        output.append(prevrow[-1])
+        return output
