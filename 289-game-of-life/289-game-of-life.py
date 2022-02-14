@@ -38,7 +38,5 @@ class Solution:
                 if self.checkCells(board,m,n,i,j,board[i][j]):
                     change.append([i,j])
         
-        for i in range(m):
-            for j in range(n):
-                if [i,j] in change:
-                    board[i][j] = 1 - board[i][j]
+        for [i,j] in change:
+            board[i][j] = 1 - board[i][j]
