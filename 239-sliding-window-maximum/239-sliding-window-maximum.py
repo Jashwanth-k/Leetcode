@@ -1,18 +1,16 @@
-import heapq
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         i = j = 0
-        maxHeap = []
         output = []
+        queue = collections.deque()
         while j < len(nums):
-            heapq.heappush(maxHeap,[-nums[j],j])
+            while len(queue) != 0 and nums[j] > queue[-1]:
+                queue.pop()
+            queue.append(nums[j])
             if (j-i+1) == k:
-                while maxHeap[0][1] < i or maxHeap[0][1] > j:
-                    heapq.heappop(maxHeap)
-                
-                output.append(-maxHeap[0][0])
-                if nums[i] == -maxHeap[0][0]:
-                    heapq.heappop(maxHeap)
+                output.append(queue[0])
+                if nums[i] == queue[0]:
+                    queue.popleft()
                 i += 1
                 j += 1
             else:
