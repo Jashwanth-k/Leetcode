@@ -3,22 +3,16 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         
-        def robHelper(nums,i):
-            if i == 0:
-                return nums[i]
-            if i < 0:
-                return 0
-            
-            if dp[i] != -1: return dp[i]
-            
-            pick = nums[i] + robHelper(nums,i-2)
-            unpick = robHelper(nums,i-1)
-            dp[i] = max(pick,unpick)
-            return dp[i]
-        
-        n = len(nums)
-        dp = [-1] * n
-        ans1 = robHelper(nums[:-1],n-2)
-        dp = [-1] * n
-        ans2 = robHelper(nums[1:],n-2)
+        def robber(nums):
+            n = len(nums)
+            prev = nums[0]
+            prev2 = 0
+            for i in range(2,n+1):
+                curr = max(prev2 + nums[i-1],prev)
+                prev2 = prev
+                prev = curr
+            return prev
+
+        ans1 = robber(nums[:-1])
+        ans2 = robber(nums[1:])
         return max(ans1,ans2)
