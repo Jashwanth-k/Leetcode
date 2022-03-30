@@ -1,20 +1,15 @@
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
-        def distinctHelper(s,t,i,j,dp):
-            if j < 0:
-                return 1
-            if i < 0:
-                return 0
-            if dp[i][j] != -1:
-                return dp[i][j]
-            
-            ans1 = 0
-            if s[i] == t[j]:
-                ans1 = distinctHelper(s,t,i-1,j-1,dp)
-            ans2 = distinctHelper(s,t,i-1,j,dp)
-            dp[i][j] = ans1 + ans2
-            return dp[i][j]
-        
         n,m = len(s),len(t)
-        dp = [[-1]*(m) for j in range(n)]
-        return distinctHelper(s,t,n-1,m-1,dp)
+        dp = [[0]*(m+1) for j in range(n+1)]
+        for k in range(n+1):
+            dp[k][0] = 1
+        
+        for i in range(1,n+1):
+            for j in range(1,m+1):
+                ans1 = 0
+                if s[i-1] == t[j-1]:
+                    ans1 = dp[i-1][j-1]
+                ans2 = dp[i-1][j]
+                dp[i][j] = ans1 + ans2
+        return dp[n][m]
