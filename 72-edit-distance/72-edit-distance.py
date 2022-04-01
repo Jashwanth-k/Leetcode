@@ -24,5 +24,5 @@ class Solution:
                 return dp[i][j]
 
         n, m = len(word1), len(word2)
-        dp = [[-1]*(m) for j in range(500)]
+        dp = [[-1]*(m) for j in range(n)]
         return disHelper(word1, word2, n - 1, m - 1,dp)
