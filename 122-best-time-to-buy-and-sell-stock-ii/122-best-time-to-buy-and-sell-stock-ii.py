@@ -1,19 +1,22 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        def profitHelper(prices,i,hold):
-            if i < 0:
+        def profitHelper(prices,i,buy,n,dp):
+            if i == n:
                 return 0
-            if hold != None:
-                if prices[i] < hold:
-                    return hold - prices[i]
-                else:
-                    return 0
+            if dp[i][buy] != -1:
+                return dp[i][buy]
             
-            ans1 = 0
-            if hold == None:
-                ans1 = profitHelper(prices,i-1,prices[i])
-            ans2 = profitHelper(prices,i-1,None)
-            return ans1 + ans2
-        
+            if buy == 0:
+                pick = -prices[i] + profitHelper(prices,i+1,1,n,dp)
+                unpick = profitHelper(prices,i+1,0,n,dp)
+                dp[i][buy] = max(pick,unpick)
+                return dp[i][buy]
+            else:
+                pick = prices[i] + profitHelper(prices,i+1,0,n,dp)
+                unpick = profitHelper(prices,i+1,1,n,dp)
+                dp[i][buy] = max(pick,unpick)
+                return dp[i][buy]
+            
         n = len(prices)
-        return profitHelper(prices,n-1,None)
+        dp = [[-1]*2 for i in range(n)]
+        return profitHelper(prices,0,0,n,dp)
