@@ -1,25 +1,18 @@
 class Solution:
     def wiggleMaxLength(self, nums: List[int]) -> int:
-        def wiggleHelper(nums,i,state,dp):
-            if i == 0:
-                return 0
-            if dp[i][state] != -1:
-                return dp[i][state]
-            
-            include = 0
-            if state == 0:
-                if nums[i] - nums[i-1] > 0:
-                    include = 1 + wiggleHelper(nums,i-1,1,dp)
-            if state == 1:
-                if nums[i] - nums[i-1] < 0:
-                    include = 1 + wiggleHelper(nums,i-1,0,dp)
-            exclude = wiggleHelper(nums,i-1,state,dp)
-            dp[i][state] = max(include,exclude)        
-            return dp[i][state]
-                    
         n = len(nums)
-        if n == 1: return n
-        if nums[-1] - nums[-2] > 0:  state = 0
-        else:  state = 1
-        dp = [[-1]*(2) for j in range(n)]
-        return 1 + wiggleHelper(nums, n - 1, state,dp)
+        dp = [[0]*(2) for j in range(n)]
+        
+        for i in range(1,n):
+            for state in range(2):
+                include = 0
+                if state == 0:
+                    if nums[i] - nums[i-1] > 0:
+                        include = 1 + dp[i-1][1]
+                if state == 1:
+                    if nums[i] - nums[i-1] < 0:
+                        include = 1 + dp[i-1][0]        
+                exclude = dp[i-1][state]
+                dp[i][state] = max(include,exclude)     
+                
+        return 1 + max(dp[-1][0],dp[-1][1])
