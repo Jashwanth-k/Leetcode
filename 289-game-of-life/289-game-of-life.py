@@ -1,24 +1,17 @@
 class Solution:
+    def validate(self,m,n,r,c):
+        if r < 0 or c < 0:
+            return False
+        if r >= m or c >= n:
+            return False
+        return True
+    
     def checkCells(self,board,m,n,r,c,cell):
         count = 0
-        
-        if c+1 < n and board[r][c+1] == 1:
-            count += 1
-        if c-1 >= 0 and board[r][c-1] == 1:
-            count += 1
-        if r-1 >= 0 and board[r-1][c] == 1:
-            count += 1
-        if r+1 < m and board[r+1][c] == 1:
-            count += 1
-            
-        if r-1 >= 0 and c+1 < n and board[r-1][c+1] == 1:
-            count += 1
-        if r+1 < m and c+1 < n and board[r+1][c+1] == 1:
-            count += 1
-        if r-1 >= 0 and c-1 >= 0 and board[r-1][c-1] == 1:
-            count += 1
-        if r+1 < m and c-1 >= 0 and board[r+1][c-1] == 1:
-            count += 1
+        check = [[r,c+1],[r,c-1],[r-1,c],[r+1,c],[r-1,c+1],[r+1,c+1],[r-1,c-1],[r+1,c-1]]
+        for k,l in check:
+            if self.validate(m,n,k,l):
+                count += board[k][l]
             
         if cell == 1:
             if count > 3 or count < 2:
