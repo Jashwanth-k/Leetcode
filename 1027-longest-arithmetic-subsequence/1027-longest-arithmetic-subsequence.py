@@ -1,20 +1,15 @@
 class Solution:
-    def helper(self,nums,diff):
-        dp = {}
-        ans = 1
-        for i in nums:
-            if i - diff in dp:
-                dp[i] = dp[i - diff] + 1
-            else:
-                dp[i] = 1
-            ans = max(ans,dp[i]) 
-        return ans
-    
     def longestArithSeqLength(self, nums: List[int]) -> int:
-        limit = max(nums) - min(nums)
-        output = 1
-        for j in range(limit+1):
-            ans1 = self.helper(nums,j)
-            ans2 = self.helper(nums,-j)
-            output = max(ans1,ans2,output)
-        return output
+        n = len(nums)
+        dp = [{} for j in range(n)]
+        ans = 0
+        
+        for i in range(n):
+            for j in range(i):
+                diff = nums[i] - nums[j]
+                if diff in dp[j]:
+                    dp[i][diff] = max(dp[j][diff]+1,2)
+                else:
+                    dp[i][diff] = 2
+                ans = max(ans,dp[i][diff])
+        return ans
