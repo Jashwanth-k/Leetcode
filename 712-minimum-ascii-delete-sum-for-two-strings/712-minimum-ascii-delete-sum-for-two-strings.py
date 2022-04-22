@@ -1,30 +1,19 @@
 class Solution:
     def minimumDeleteSum(self, s1: str, s2: str) -> int:
-        def lcs(s1,s2,i,j,dp):
-            if i < 0 and j < 0:
-                return 0
-            if i < 0:
-                curr = 0
-                for k in s2[:j+1]:
-                    curr += ord(k)
-                return curr
-            if j < 0:
-                curr = 0
-                for k in s1[:i+1]:
-                    curr += ord(k)
-                return curr
-            if dp[i][j] != -1:
-                return dp[i][j]
-            
-            if s1[i] == s2[j]:
-                dp[i][j] = lcs(s1,s2,i-1,j-1,dp)
-                return dp[i][j]
-            else:
-                ans1 = ord(s2[j]) + lcs(s1,s2,i,j-1,dp)
-                ans2 = ord(s1[i]) + lcs(s1,s2,i-1,j,dp)
-                dp[i][j] = min(ans1,ans2)
-                return dp[i][j]
-            
         n,m = len(s1),len(s2)
-        dp = [[-1]*(m) for j in range(n)]
-        return lcs(s1,s2,n-1,m-1,dp)
+        dp = [[0]*(m+1) for j in range(n+1)]
+        
+        for k in range(1,m+1):
+            dp[0][k] = ord(s2[k-1]) + dp[0][k-1]
+        for k in range(1,n+1):
+            dp[k][0] = ord(s1[k-1]) + dp[k-1][0]
+            
+        for i in range(1,n+1):
+            for j in range(1,m+1):
+                if s1[i-1] == s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    ans1 = ord(s2[j-1]) + dp[i][j-1]
+                    ans2 = ord(s1[i-1]) + dp[i-1][j]
+                    dp[i][j] = min(ans1,ans2)
+        return dp[n][m]
