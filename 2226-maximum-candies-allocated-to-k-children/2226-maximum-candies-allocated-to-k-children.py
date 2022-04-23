@@ -8,6 +8,8 @@ class Solution:
     
     def maximumCandies(self, candies: List[int], k: int) -> int:
         si,ei = 1,sum(candies)
+        if ei < k:
+            return 0
         ans = 0
         while si <= ei:
             mid = si + (ei-si) // 2
