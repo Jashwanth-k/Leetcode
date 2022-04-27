@@ -1,34 +1,25 @@
 class MedianFinder:
-    def binarySearch(self,target):
-        si = 0
-        ei = self.length - 1
-        while si <= ei:
-            mid = si + (ei-si) // 2
-            if target == self.nums[mid]:
-                return mid
-            if target > self.nums[mid]:
-                si = mid + 1
-            else:
-                ei = mid - 1
-        return si
 
     def __init__(self):
-        self.nums = []
-        self.length = 0
+        self.low = []
+        self.high = []
 
     def addNum(self, num: int) -> None:
-        idx = self.binarySearch(num)
-        self.nums.insert(idx,num)
-        self.length += 1
+        heapq.heappush(self.low,-num)
+        heapq.heappush(self.high,-self.low[0])
+        heapq.heappop(self.low)
+        
+        if len(self.low) < len(self.high):
+            heapq.heappush(self.low,-self.high[0])
+            heapq.heappop(self.high)
         return
 
     def findMedian(self) -> float:
-        mid = (self.length-1) // 2
-        if self.length % 2 == 0:
-            ans = (self.nums[mid] + self.nums[mid+1]) / 2
+        if len(self.low) > len(self.high):
+            return -self.low[0]
         else:
-            ans = self.nums[mid]
-        return ans
+            return (-self.low[0] + self.high[0]) / 2.0
+
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
