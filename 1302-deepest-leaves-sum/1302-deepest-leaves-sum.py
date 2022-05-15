@@ -5,23 +5,24 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def findHeight(self,root):
-        if root is None:
-            return 0
-        
-        return 1 + max(self.findHeight(root.left),self.findHeight(root.right))
-        
     def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
-        def DFS(root,h):
-            if root is None:
-                return 
-            
-            if h == 0:
-                self.ans += root.val
-            DFS(root.left,h-1)
-            DFS(root.right,h-1)
+        q = collections.deque()
+        q.append(root)
+        q.append(None)
+        curr = 0
+        while len(q) != 0:
+            curNode = q.popleft()
+            if curNode == None:
+                if len(q) == 0:
+                    break
+                q.append(None)
+                curr = 0
+                continue
                 
-        self.ans = 0
-        h = self.findHeight(root)-1
-        DFS(root,h)
-        return self.ans
+            curr += curNode.val
+            if curNode.left:
+                q.append(curNode.left)
+            if curNode.right:
+                q.append(curNode.right)
+        return curr
+        
