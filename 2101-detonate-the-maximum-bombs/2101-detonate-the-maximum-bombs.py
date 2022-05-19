@@ -23,15 +23,9 @@ class Solution:
         ans = 0
         for i in range(n):
             visited = set()
-            ct = 1
-            visited.add(i)
-            for sib in d[i]:
-                ct += 1
-                visited.add(sib)
-            
             childct = 0
             for sib in d[i]:
-                curr = self.DFS(d, sib, visited)
+                curr = self.DFS(d, i, visited)
                 childct = max(curr, childct)
-            ans = max(ans, ct + childct)
-        return ans
+            ans = max(ans,childct)
+        return 1+ans
