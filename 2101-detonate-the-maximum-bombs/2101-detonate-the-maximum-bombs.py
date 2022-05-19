@@ -1,11 +1,9 @@
 class Solution:
     def DFS(self,d,si,visited):
-        visited.add(si)
-        
+        visited.add(si) 
         curr = 0
         for sib in d[si]:
             if sib not in visited:
-                visited.add(sib)
                 curr += 1 + self.DFS(d,sib,visited)
         return curr
     
@@ -23,9 +21,6 @@ class Solution:
         ans = 0
         for i in range(n):
             visited = set()
-            childct = 0
-            for sib in d[i]:
-                curr = self.DFS(d, i, visited)
-                childct = max(curr, childct)
-            ans = max(ans,childct)
-        return 1+ans
+            curr = 1 + self.DFS(d, i, visited)
+            ans = max(ans,curr)
+        return ans
