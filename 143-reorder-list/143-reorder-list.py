@@ -5,24 +5,29 @@
 #         self.next = next
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
-        def createRev(head):
-            nonlocal helper
-            curr = head
-            while curr:
-                helper.append(curr.val)
-                curr = curr.next
-            return 
+        if head.next == None: return
+        slow = head
+        fast = head.next
+        while slow and fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
         
-        helper = []
-        createRev(head)
-        n = len(helper)
-        c1,n1 = head,head.next
-        for i in range(n // 2):
-            present = ListNode(helper[n-1-i])
-            c1.next = present
-            present.next = n1
-            c1 = n1
-            n1 = n1.next
-            
-        if n % 2 != 0:c1.next = None
-        else: present.next = None
+        mid = slow.next
+        slow.next = None
+        prev,curr,nxt = None,mid,mid.next
+        while curr:
+            curr.next = prev
+            prev = curr
+            curr = nxt
+            if nxt: nxt = nxt.next
+        head2 = prev
+        head1 = head
+    
+        while head1:
+            nxt1 = head1.next
+            nxt2 = head2.next
+            head1.next = head2
+            if not nxt1: break
+            head2.next = nxt1
+            head1 = nxt1
+            head2 = nxt2
