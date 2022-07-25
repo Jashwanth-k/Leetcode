@@ -1,9 +1,6 @@
 class Solution:
     def numberOfArithmeticSlices(self, nums: List[int]) -> int:
-        n = len(nums)
-        if n < 3:
-            return 0
-        
+        n = len(nums)        
         res, i, j = 0, 0, 1
         prev = None
         while j <= n:
@@ -12,8 +9,8 @@ class Solution:
                 j += 1
             else:
                 if j - i >= 3:
-                    for k in range(3,j-i+1):
-                        res += (j - i) - k + 1
+                    k = (j-i)-3 + 1
+                    res += k*(k+1) // 2
                 prev = None
                 i = j - 1
                 if j == n:
