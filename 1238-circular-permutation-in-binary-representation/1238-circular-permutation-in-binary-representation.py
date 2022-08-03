@@ -1,19 +1,18 @@
 class Solution:
     def circularPermutation(self, n: int, start: int) -> List[int]:
-        stb = bin(start)[2:]
-        mxlen = len(bin(2**n-1)[2:])
-        st = "0"*(mxlen - len(stb)) + stb
-        helper = [st]
-        used = set()
-        used.add(st)
-        ct = 1
-        while ct < 2**n:
-            cur = helper[-1]
-            for i in range(mxlen):
-                change = cur[:i] + str(1 - int(cur[i])) + cur[i+1:]
-                if change not in used:
-                    helper.append(change)
-                    used.add(change)
-                    break
-            ct += 1
-        return [int(i,2) for i in helper]
+        def DFS(n):
+            if n == 1:
+                return ["0","1"]
+            
+            subans = DFS(n-1)
+            res = []
+            for i in range(len(subans)):
+                res.append("0" + subans[i])
+            for i in range(len(subans)-1,-1,-1):
+                res.append("1" + subans[i])
+            return res
+        
+        res = DFS(n)
+        for i in range(2**n):
+            if int(res[i],2) == start:
+                return [int(j,2) for j in res[i:] + res[:i]]
