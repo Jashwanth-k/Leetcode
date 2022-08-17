@@ -1,12 +1,18 @@
 class Solution:
     def wiggleSort(self, nums: List[int]) -> None:
-        helper = sorted(nums)
         n = len(nums)
-        lo,hi = (n-1)//2,-1
-        for i in range(n):
-            if i % 2 == 0:
-                nums[i] = helper[lo]
-                lo -= 1
-            else:
-                nums[i] = helper[hi]
-                hi -= 1
+        end = max(nums)
+        bucket = [0]*(end+1)
+        for i in nums:
+            bucket[i] += 1
+        order = [i for i in range(end+1) if bucket[i] != 0]
+        
+        def helper(st):
+            for i in range(st,n,2):
+                ele = order[-1]
+                nums[i] = ele
+                bucket[ele] -= 1
+                if bucket[ele] == 0:
+                    order.pop()
+        helper(1)
+        helper(0)
