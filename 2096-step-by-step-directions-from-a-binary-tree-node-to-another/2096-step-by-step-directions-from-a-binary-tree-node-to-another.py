@@ -13,44 +13,33 @@ class Solution:
             
             left = lca(root.left)
             right = lca(root.right)
-            
             if (root.val == startValue or root.val == destValue) and (left or right):
                 self.rootlca = root
                 return
             if left and right:
                 self.rootlca = root
                 return
-            if left or right:
-                return True
-            if root.val == startValue or root.val == destValue:
+            if left or right or root.val == startValue or root.val == destValue:
                 return True
                 
         self.rootlca = None
         lca(root)
-        def DFS(root,path1,path2):
+        def DFS(root,path):
             if root == None:
                 return
             
             if root.val == startValue:
-                if self.flag:
-                    self.res = path1 + self.res
-                else:
-                    self.res += path1
-                
+                self.start = "U"*len(path)
             if root.val == destValue:
-                self.res += path2
-                self.flag = True
+                self.dest = path[:]
             
-            path1.append("U")
-            path2.append("L")
-            DFS(root.left,path1,path2)
-            path2.pop()
-            path2.append("R")
-            DFS(root.right,path1,path2)
-            path2.pop()
-            path1.pop()
+            path.append("L")
+            DFS(root.left,path)
+            path[-1] = "R"
+            DFS(root.right,path)
+            path.pop()
             
-        self.res = []
-        self.flag = False
-        DFS(self.rootlca,[],[])
-        return "".join(self.res)
+        self.start = []
+        self.dest = []
+        DFS(self.rootlca,[])
+        return self.start + "".join(self.dest)
