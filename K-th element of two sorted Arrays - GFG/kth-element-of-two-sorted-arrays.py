@@ -2,8 +2,6 @@
 
 class Solution:
     def kthElement(self,  arr1, arr2, n, m, k):
-        if m < n:
-            return self.kthElement(arr2, arr1, m ,n, k)
         si, ei = 0, n - 1
         while si <= ei:
             mid = si + (ei - si) // 2
