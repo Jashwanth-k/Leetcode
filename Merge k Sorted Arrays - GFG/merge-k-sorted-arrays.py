@@ -3,19 +3,36 @@ from heapq import heappush,heappop
 class Solution:
     #Function to merge k sorted arrays.
     def mergeKArrays(self, arr, K):
-        helper = [0]*K
-        minHp = []
-        res = []
-        for i in range(K):
-            heappush(minHp,[arr[i][0],0,i])
-        while minHp:
-            cur,elidx,i = heappop(minHp)
-            res.append(cur)
-            if elidx + 1 == K:
-                continue
-            heappush(minHp,[arr[i][elidx+1],elidx+1,i])
-        return res
-
+        def merge(left,right):
+            n,m = len(left),len(right)
+            arr = []
+            i = j = 0
+            while i < n and j < m:
+                if left[i] <= right[j]:
+                    arr.append(left[i])
+                    i += 1
+                else:
+                    arr.append(right[j])
+                    j += 1
+            arr += left[i:]
+            arr += right[j:]
+            return arr
+        
+        def mergeSort(l,r):
+            if l > r:
+                return
+            if l == r:
+                return arr[l]
+            mid = l + (r-l) // 2
+            left = mergeSort(l,mid)
+            right = mergeSort(mid+1,r)
+            return merge(left,right)
+            
+        return mergeSort(0,K-1)
+        
+        
+        
+        
 #{ 
  # Driver Code Starts
 #Initial Template for Python 3
