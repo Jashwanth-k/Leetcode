@@ -1,18 +1,29 @@
 #User function Template for python3
 
 class Solution:
-    
     #Function to find if there is a celebrity in the party or not.
     def celebrity(self, M, n):
+        d = [None] * n
         for j in range(n):
-            cur1 = cur2 = 0
+            if d[j]:
+                continue
             for i in range(n):
-                if M[i][j]:
-                    cur1 += 1
-                cur2 += M[j][i]
-            if cur1 == n-1 and not cur2:
-                return j
-        return -1
+                if M[j][i] and M[i][j]:
+                    d[j] = True
+                    d[i] = True
+                    continue
+                elif M[j][i]:
+                    d[j] = True
+                    continue
+        flag = idx = -1
+        for i in range(n):
+            if flag == d[i]:
+                return -1
+            if d[i] == None:
+                flag = None
+                idx = i
+        return idx
+                    
 
 
 #{ 
